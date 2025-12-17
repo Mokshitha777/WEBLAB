@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Registration Form</title>
+    <!-- <style>
+        body { font-family: sans-serif; background-color: #f4f4f9; padding: 20px; }
+        form { max-width: 400px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        div { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], input[type="email"], input[type="date"], input[type="tel"], input[type="password"], input[type="file"] {
+            width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px;
+        }
+        .checkbox-group { display: flex; align-items: center; gap: 10px; }
+        button { background-color: #007bff; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; width: 100%; }
+        button:hover { background-color: #0056b3; }
+    </style> -->
+</head>
+<body>
+
+    <h2>Create Your Account</h2>
+    <form action="/submit-registration" method="POST" enctype="multipart/form-data">
+        
+        <div>
+            <label for="fullname">Full Name</label>
+            <input type="text" id="fullname" name="fullname" placeholder="John Doe" required>
+        </div>
+
+        <div>
+            <label for="useremail">Email Address</label>
+            <input type="email" id="useremail" name="useremail" placeholder="example@mail.com" required>
+        </div>
+
+        <div>
+            <label for="dob">Date of Birth</label>
+            <input type="date" id="dob" name="dob" required>
+        </div>
+
+        <div>
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder="1234567890" title="Please enter a 10-digit phone number" required>
+        </div>
+
+        <div>
+            <label for="psw">Password</label>
+            <input type="password" id="psw" name="password" minlength="8" required>
+        </div>
+
+        <div>
+            <label for="profile_pic">Choose Profile Picture</label>
+            <input type="file" id="profile_pic" name="profile_pic" accept="image/*">
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="terms" name="terms" required>
+            <label for="terms">I accept the terms & conditions</label>
+        </div>
+
+        <button type="submit">Register Now</button>
+    </form>
+
+</body>
+</html>

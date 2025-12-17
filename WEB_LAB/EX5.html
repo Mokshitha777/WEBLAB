@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mokshitha Pothuri | ML Student Portfolio</title>
+    <style>
+        /* Modern Design System */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #334155;
+            line-height: 1.7;
+        }
+
+        /* 1. Header with ML Student Tagline */
+        header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        header p {
+            font-size: 1.3rem;
+            color: #38bdf8;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        /* 2. Section Layout */
+        section {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #1e293b;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #38bdf8;
+            display: inline-block;
+        }
+
+        /* 3. About Me Paragraph */
+        .about-text {
+            font-size: 1.1rem;
+            color: #475569;
+        }
+
+        /* 4. Skills Section (Updated with AIML/Data Science) */
+        .skills-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        ul li {
+            background: #f1f5f9;
+            margin: 10px 0;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border-left: 5px solid #38bdf8;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        ul li:hover {
+            background: #e2e8f0;
+            transform: translateX(5px);
+        }
+
+        .skill-category {
+            font-weight: bold;
+            color: #0f172a;
+            margin-bottom: 12px;
+            display: block;
+            font-size: 1.1rem;
+        }
+
+        /* 5. Projects Section */
+        .project-box {
+            border: 1px solid #e2e8f0;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .project-box:hover {
+            border-color: #38bdf8;
+            background-color: #f0f9ff;
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.1);
+        }
+
+        .project-box h3 {
+            color: #0284c7;
+            margin-bottom: 10px;
+        }
+
+        /* 6. Footer */
+        footer {
+            background-color: #0f172a;
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+            margin-top: 60px;
+        }
+
+        .contact-link {
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .contact-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>MOKSHITHA POTHURI</h1>
+        <p>ML Student & Aspiring Cloud Engineer</p>
+    </header>
+
+    <section>
+        <h2>About Me</h2>
+        <p class="about-text">
+            I am a 3rd Year B.Tech student focused on <strong>Machine Learning</strong> and Intelligent Systems. I specialize in bridging the gap between advanced data science algorithms and scalable software solutions. My academic foundation is built on mastering predictive modeling, soft computing, and cloud-based deployments. I am passionate about utilizing AI/ML architectures to solve real-world problems and optimize decision-making processes.
+        </p>
+    </section>
+
+    <section>
+        <h2>Technical & Professional Skills</h2>
+        <div class="skills-container">
+            <div>
+                <span class="skill-category">AI, ML & Data Science</span>
+                <ul>
+                    <li>AIML (Neural Networks & Deep Learning)</li>
+                    <li>Data Science (EDA & Statistical Modeling)</li>
+                    <li>Python & R Language</li>
+                    <li>Fuzzy Logic & Soft Computing</li>
+                    <li>Power BI & Data Visualization</li>
+                </ul>
+            </div>
+            <div>
+                <span class="skill-category">Software & Cloud</span>
+                <ul>
+                    <li>AWS Cloud Services</li>
+                    <li>Java & JDBC Architecture</li>
+                    <li>SQL (PostgreSQL / MySQL)</li>
+                    <li>Web Development (HTML/CSS)</li>
+                    <li>VS Code & Version Control (Git)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Featured Projects</h2>
+        
+        <div class="project-box">
+            <h3>Fuzzy Logic Soft Computing Model</h3>
+            <p>Implemented an advanced <strong>Machine Learning</strong> project focusing on Fuzzy Logic and Membership Functions to handle uncertainty and non-linear data patterns in complex decision-making systems.</p>
+        </div>
+
+        <div class="project-box">
+            <h3>Student Management System</h3>
+            <p>Developed a robust backend system using <strong>Java and JDBC</strong> to handle student records, ensuring secure data persistence and efficient retrieval through optimized SQL queries.</p>
+        </div>
+
+        <div class="project-box">
+            <h3>Bank Management Application</h3>
+            <p>Designed a secure finance application utilizing <strong>JDBC connections</strong> to manage accounts, process transactions, and maintain data integrity across a relational database.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>Looking for an ML Intern or Collaborator?</p>
+        <p style="margin: 10px 0;">Email: <a href="mailto:mokshithapotturi@gmail.com" class="contact-link">mokshithapotturi@gmail.com</a></p>
+        <p style="margin-top: 20px; font-size: 0.8rem; opacity: 0.6;">&copy; 2025 | Mokshitha Pothuri | Portfolio</p>
+    </footer>
+
+</body>
+</html>
