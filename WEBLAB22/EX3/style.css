@@ -1,0 +1,121 @@
+:root {
+    --bg: #0f172a;
+    --card-bg: #1e293b;
+    --text: #f8fafc;
+    --accent: #38bdf8;
+    --success: #4ade80;
+    --progress: #fbbf24;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 40px 20px;
+}
+
+.container { max-width: 1100px; margin: auto; }
+
+header { text-align: center; margin-bottom: 50px; }
+
+h1 { font-size: 2.5rem; letter-spacing: -1px; }
+.accent { color: var(--accent); }
+
+.input-section {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+input {
+    background: var(--card-bg);
+    border: 2px solid #334155;
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: white;
+    width: 300px;
+    transition: 0.3s;
+}
+
+input:focus { border-color: var(--accent); outline: none; }
+
+button#addTaskBtn {
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Board Design */
+.board {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.column {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 20px;
+    min-height: 500px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #334155;
+}
+
+.status-bar { height: 5px; width: 100%; position: absolute; top: 0; left: 0; }
+#bar-todo { background: #94a3b8; }
+#bar-progress { background: var(--progress); }
+#bar-completed { background: var(--success); }
+
+.drop-zone { min-height: 450px; margin-top: 15px; }
+
+/* Task Card Style */
+.task-card {
+    background: #0f172a;
+    border: 1px solid #334155;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    cursor: grab;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.task-card:hover { box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); }
+
+.task-card strong { display: block; margin-bottom: 5px; color: var(--accent); }
+
+.time-box { font-size: 0.75rem; color: #64748b; display: block; margin-bottom: 10px; }
+
+/* Buttons inside Cards */
+.card-actions { display: flex; gap: 8px; margin-top: 10px; }
+
+.action-btn {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    background: #334155;
+    color: white;
+}
+
+.complete-trigger:hover { background: var(--success); color: var(--bg); }
+
+/* Dropped in Completed */
+.task-card.done {
+    border-color: var(--success);
+    opacity: 0.8;
+}
+
+.success-tag {
+    color: var(--success);
+    font-size: 0.7rem;
+    font-weight: bold;
+    display: block;
+    margin-top: 5px;
+}

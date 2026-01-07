@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multimedia Exercise - Fixed</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 30px; background-color: #f4f7f6; color: #333; }
+        .container { max-width: 700px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .media-section { margin-bottom: 30px; border-bottom: 2px solid #eee; padding-bottom: 20px; }
+        video { width: 100%; height: 360px; border-radius: 8px; background: #000; }
+        audio { width: 100%; margin-top: 10px; }
+        .timer { font-family: monospace; font-size: 1.2rem; color: #d35400; font-weight: bold; }
+        h2 { color: #2c3e50; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Multimedia Dashboard</h1>
+
+    <div class="media-section">
+        <h2>🎵 Audio: Hanuman Chalisa</h2>
+        <audio id="audioPlayer" controls>
+            <source src="hanuman-chalisa-hariharan-gulshan-kumar.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <p>Current Time: <span id="audioClock" class="timer">0:00</span></p>
+    </div>
+
+    <div class="media-section">
+        <h2>📺 Video Player</h2>
+        <video id="videoPlayer" controls>
+            <source src="Video.mp4.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <p>Current Time: <span id="videoClock" class="timer">0:00</span></p>
+    </div>
+</div>
+
+<script>
+    const audio = document.getElementById('audioPlayer');
+    const video = document.getElementById('videoPlayer');
+    const audioClock = document.getElementById('audioClock');
+    const videoClock = document.getElementById('videoClock');
+
+    function formatTime(time) {
+        const mins = Math.floor(time / 60);
+        const secs = Math.floor(time % 60);
+        return mins + ":" + (secs < 10 ? '0' : '') + secs;
+    }
+
+    // Update time dynamically
+    audio.addEventListener('timeupdate', () => {
+        audioClock.textContent = formatTime(audio.currentTime);
+    });
+
+    video.addEventListener('timeupdate', () => {
+        videoClock.textContent = formatTime(video.currentTime);
+    });
+
+    // Error handling to tell you if the file is missing
+    audio.onerror = () => { audioClock.textContent = "Error: File not found in folder"; };
+    video.onerror = () => { videoClock.textContent = "Error: File not found in folder"; };
+</script>
+
+</body>
+</html>
