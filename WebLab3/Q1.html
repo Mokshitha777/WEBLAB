@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adaptive Registration System</title>
+    <style>
+        :root {
+            --error: #e74c3c;
+            --success: #27ae60;
+            --primary: #3498db;
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; display: flex; justify-content: center; padding: 40px 20px; }
+        .card { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 450px; }
+        h2 { margin-top: 0; color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        
+        .form-group { margin-bottom: 1.2rem; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; color: #34495e; }
+        input, select { width: 100%; padding: 12px; border: 2px solid #dfe6e9; border-radius: 6px; box-sizing: border-box; transition: 0.3s; }
+        input:focus { border-color: var(--primary); outline: none; }
+        
+        /* Validation Styling */
+        .invalid { border-color: var(--error) !important; background-color: #fff5f5; }
+        .valid { border-color: var(--success); }
+        .error-text { color: var(--error); font-size: 0.85rem; margin-top: 4px; display: none; }
+        
+        /* Password Checklist */
+        .checklist { background: #f8f9fa; padding: 10px; border-radius: 6px; margin-top: 10px; font-size: 0.8rem; }
+        .check-item { color: #95a5a6; display: flex; align-items: center; gap: 5px; }
+        .check-item.met { color: var(--success); font-weight: bold; }
+        .check-item.met::before { content: '✓'; }
+        .check-item::before { content: '○'; }
+
+        .hidden { display: none; }
+        button { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1rem; margin-top: 10px; }
+        button:disabled { background: #bdc3c7; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Create Account</h2>
+    <form id="regForm" novalidate>
+        <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="name" placeholder="John Doe">
+            <div class="error-text" id="nameError">Name must be at least 3 characters.</div>
+        </div>
+
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="email" placeholder="name@company.com">
+            <div class="error-text" id="emailError">Enter a valid email (e.g., user@domain.com).</div>
+        </div>
+
+        <div class="form-group">
+            <label>Role</label>
+            <select id="role">
+                <option value="Student">Student</option>
+                <option value="Teacher">Teacher</option>
+                <option value="Admin">Admin (Strict Security)</option>
+            </select>
+        </div>
+
+        <div class="form-group" id="skillsGroup">
+            <label>Skills</label>
+            <input type="text" id="skills" placeholder="e.g. JavaScript, Design">
+        </div>
+
+        <div class="form-group">
+            <label>Age</label>
+            <input type="number" id="age" placeholder="Min age applies">
+            <div class="error-text" id="ageError">Age doesn't meet role requirements.</div>
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="password" placeholder="••••••••">
+            <div class="checklist" id="pwChecklist">
+                <div class="check-item" id="c-length">Length requirement</div>
+                <div class="check-item" id="c-number">Contains a number (0-9)</div>
+                <div class="check-item" id="c-symbol">Contains a symbol (@$!%*?&)</div>
+            </div>
+            <div class="error-text" id="passwordError">Password is too weak for this role.</div>
+        </div>
+
+        <div class="form-group">
+            <label>Confirm Password</label>
+            <input type="password" id="confirmPassword">
+            <div class="error-text" id="confirmPasswordError">Passwords do not match.</div>
+        </div>
+
+        <button type="submit" id="submitBtn" disabled>Register</button>
+    </form>
+</div>
+
+<script>
+    const form = document.getElementById('regForm');
+    const roleSelect = document.getElementById('role');
+    const submitBtn = document.getElementById('submitBtn');
+
+    // DYNAMIC VALIDATION RULES
+    const roleRules = {
+        Student: { 
+            minAge: 16, 
+            pwRegex: /^(?=.*\d)(?=.*[@$!%*?&]).{6,}$/,
+            desc: "Min 6 chars + Number + Symbol"
+        },
+        Teacher: { 
+            minAge: 21, 
+            pwRegex: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/,
+            desc: "Min 8 chars + Letter + Number + Symbol"
+        },
+        Admin: { 
+            minAge: 25, 
+            pwRegex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{10,}$/,
+            desc: "Min 10 chars + Upper/Lower + Number + Symbol"
+        }
+    };
+
+    // 1. Role Change Logic (DOM Manipulation)
+    roleSelect.addEventListener('change', () => {
+        const role = roleSelect.value;
+        const skillsGroup = document.getElementById('skillsGroup');
+        
+        // Dynamic Field visibility
+        if (role === 'Admin') {
+            skillsGroup.classList.add('hidden');
+        } else {
+            skillsGroup.classList.remove('hidden');
+        }
+        
+        // Refresh text on checklist
+        document.getElementById('c-length').innerText = `At least ${roleRules[role].pwRegex.toString().split('{')[1].split(',')[0]} characters`;
+        
+        validateForm();
+    });
+
+    // 2. Real-time Password Checklist Visualizer
+    function updateChecklist(pw) {
+        const role = roleSelect.value;
+        const minLen = parseInt(roleRules[role].pwRegex.toString().split('{')[1]);
+        
+        const checks = {
+            'c-length': pw.length >= minLen,
+            'c-number': /\d/.test(pw),
+            'c-symbol': /[@$!%*?&]/.test(pw)
+        };
+
+        for (const [id, met] of Object.entries(checks)) {
+            document.getElementById(id).classList.toggle('met', met);
+        }
+    }
+
+    // 3. Validation Logic
+    function validateField(input) {
+        const val = input.value.trim();
+        const role = roleSelect.value;
+        let isValid = true;
+
+        if (input.id === 'name') isValid = val.length >= 3;
+        if (input.id === 'email') isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+        if (input.id === 'age') isValid = parseInt(val) >= roleRules[role].minAge;
+        if (input.id === 'password') {
+            isValid = roleRules[role].pwRegex.test(val);
+            updateChecklist(val);
+        }
+        if (input.id === 'confirmPassword') {
+            isValid = val === document.getElementById('password').value && val !== "";
+        }
+
+        // DOM Feedback
+        const errorEl = document.getElementById(`${input.id}Error`);
+        if (!isValid && val !== "") {
+            input.classList.add('invalid');
+            if (errorEl) errorEl.style.display = 'block';
+        } else {
+            input.classList.remove('invalid');
+            if (errorEl) errorEl.style.display = 'none';
+        }
+        
+        return isValid;
+    }
+
+    // 4. Form Event Listeners
+    function validateForm() {
+        const allInputs = Array.from(form.querySelectorAll('input:not(.hidden input)'));
+        const formIsValid = allInputs.every(input => validateField(input));
+        submitBtn.disabled = !formIsValid;
+    }
+
+    form.addEventListener('input', (e) => {
+        if (e.target.tagName === 'INPUT') {
+            validateForm();
+        }
+    });
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert(`Success! Account created for ${document.getElementById('name').value} as ${roleSelect.value}`);
+        form.reset();
+        validateForm();
+    });
+
+    // Initial run
+    roleSelect.dispatchEvent(new Event('change'));
+</script>
+
+</body>
+</html>
