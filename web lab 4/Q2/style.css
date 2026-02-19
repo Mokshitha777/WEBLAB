@@ -1,0 +1,105 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #f4f6fb;
+    padding: 40px;
+}
+
+.wrapper {
+    max-width: 900px;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    text-align: center;
+    margin-bottom: 25px;
+    color: gray;
+}
+
+.search-box {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    border-radius: 30px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: #4a6cf7;
+    box-shadow: 0 0 8px rgba(74,108,247,0.2);
+    outline: none;
+}
+
+.loader {
+    position: absolute;
+    right: 20px;
+    top: 14px;
+    width: 18px;
+    height: 18px;
+    border: 3px solid #ddd;
+    border-top: 3px solid #4a6cf7;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+.hidden {
+    display: none;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h3 {
+    margin-bottom: 8px;
+}
+
+.price {
+    font-weight: bold;
+    color: #4a6cf7;
+}
+
+.category {
+    font-size: 13px;
+    color: gray;
+}
+
+.message {
+    grid-column: 1/-1;
+    text-align: center;
+    color: #999;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}

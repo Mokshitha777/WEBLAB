@@ -1,0 +1,16 @@
+{
+  "products": [
+    { "name": "Wireless Mouse", "price": 799, "category": "Electronics" },
+    { "name": "Gaming Keyboard", "price": 1499, "category": "Electronics" },
+    { "name": "Bluetooth Headphones", "price": 2199, "category": "Electronics" },
+    { "name": "Smart Watch", "price": 3499, "category": "Electronics" },
+    { "name": "Running Shoes", "price": 1999, "category": "Footwear" },
+    { "name": "Casual Sneakers", "price": 1799, "category": "Footwear" },
+    { "name": "Leather Wallet", "price": 699, "category": "Accessories" },
+    { "name": "Travel Backpack", "price": 1299, "category": "Bags" },
+    { "name": "Office Chair", "price": 5499, "category": "Furniture" },
+    { "name": "Study Table", "price": 3999, "category": "Furniture" },
+    { "name": "Water Bottle", "price": 299, "category": "Accessories" },
+    { "name": "Yoga Mat", "price": 899, "category": "Fitness" }
+  ]
+}
