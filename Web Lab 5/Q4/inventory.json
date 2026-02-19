@@ -1,0 +1,25 @@
+{
+  "products": [
+    {
+      "id": "P101",
+      "name": "Wireless Mouse",
+      "category": "Electronics",
+      "price": 799,
+      "stock": 12
+    },
+    {
+      "id": "P102",
+      "name": "Notebook",
+      "category": "Stationery",
+      "price": 50,
+      "stock": 5
+    },
+    {
+      "id": "P103",
+      "name": "Water Bottle",
+      "category": "Accessories",
+      "price": 299,
+      "stock": 2
+    }
+  ]
+}

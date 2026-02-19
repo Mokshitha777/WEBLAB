@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library>
+    <book>
+        <id>B101</id>
+        <title>The Alchemist</title>
+        <author>Paulo Coelho</author>
+        <availability>Available</availability>
+    </book>
+    <book>
+        <id>B102</id>
+        <title>Clean Code</title>
+        <author>Robert C. Martin</author>
+        <availability>Issued</availability>
+    </book>
+</library>
