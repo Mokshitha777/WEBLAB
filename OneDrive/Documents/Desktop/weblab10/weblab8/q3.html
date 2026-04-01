@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body { font-family: 'Arial', sans-serif; display: flex; justify-content: center; padding-top: 50px; background-color: #f0f2f5; }
+        .status-card { background: white; width: 350px; padding: 20px; border-radius: 12px; text-align: center; border-top: 8px solid #2ecc71; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .course-info { color: #7f8c8d; font-style: italic; margin-bottom: 15px; }
+        .badge { display: inline-block; padding: 8px 15px; border-radius: 20px; color: white; font-weight: bold; margin-top: 10px; }
+        .success { background-color: #2ecc71; }
+        .error { background-color: #e74c3c; }
+    </style>
+</head>
+<body>
+    <div class="status-card">
+        <h2 id="courseTitle">Loading...</h2>
+        <p id="instructorName" class="course-info"></p>
+        <div id="statusBadge" class="badge">Checking Seats...</div>
+    </div>
+
+    <script>
+        class Course {
+            constructor(name, instructor) {
+                this.name = name;
+                this.instructor = instructor;
+            }
+        }
+
+        const myCourse = new Course("Web Technologies", "Dr. Kumar");
+        document.getElementById("courseTitle").innerText = myCourse.name;
+        document.getElementById("instructorName").innerText = `By ${myCourse.instructor}`;
+
+        const enroll = new Promise((resolve, reject) => {
+            let seatsAvailable = true; // Change to false to see the error style
+            setTimeout(() => { // Small delay to feel like a real system
+                seatsAvailable ? resolve("Enrollment Successful") : reject("Course Full");
+            }, 1000);
+        });
+
+        enroll
+            .then(msg => {
+                const b = document.getElementById("statusBadge");
+                b.innerText = msg;
+                b.classList.add("success");
+            })
+            .catch(err => {
+                const b = document.getElementById("statusBadge");
+                b.innerText = err;
+                b.classList.add("error");
+            });
+    </script>
+</body>
+</html>

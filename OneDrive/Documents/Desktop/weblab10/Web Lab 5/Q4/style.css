@@ -1,0 +1,82 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    padding: 40px;
+    color: white;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 15px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+form input {
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+}
+
+form button {
+    grid-column: span 5;
+    padding: 10px;
+    border: none;
+    background: #00ffcc;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#searchCategory {
+    margin-bottom: 15px;
+    padding: 8px;
+    width: 100%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255,255,255,0.15);
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background: rgba(255,255,255,0.2);
+}
+
+.low-stock {
+    background-color: rgba(255,0,0,0.3);
+}
+
+button.edit {
+    background: orange;
+    border: none;
+    padding: 5px;
+}
+
+button.delete {
+    background: red;
+    border: none;
+    padding: 5px;
+}
+
+.success { color: #00ffcc; }
+.error { color: #ff6b6b; }
