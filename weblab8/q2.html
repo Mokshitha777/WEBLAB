@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body { font-family: sans-serif; background-color: #eef2f3; padding: 40px; }
+        .container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); max-width: 600px; }
+        .code-box { background: #272822; color: #f8f8f2; padding: 15px; border-radius: 5px; font-family: monospace; overflow-x: auto; }
+        h3 { color: #2c3e50; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>Student Data Processing</h3>
+        <p><b>Extracted Data:</b></p>
+        <div id="destructured" style="margin-bottom: 20px; color: #2980b9; font-weight: bold;"></div>
+        
+        <p><b>Updated Object (with Spread Operator):</b></p>
+        <div id="updated" class="code-box"></div>
+    </div>
+
+    <script>
+        const student = { id: 101, name: "Priya", department: "CSE", marks: 92 };
+
+        // Destructuring
+        const {id, name, department, marks} = student;
+        document.getElementById("destructured").innerText = `${id} | ${name} | ${department} | ${marks}`;
+
+        // Spread operator
+        const updatedStudent = { ...student, grade: "A" };
+        document.getElementById("updated").innerText = JSON.stringify(updatedStudent, null, 4);
+    </script>
+</body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Smart Cart</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --success: #10b981;
+            --accent: #f59e0b;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .dashboard {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+        }
+
+        h2 { margin-top: 0; font-size: 1.5rem; font-weight: 700; }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .product-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 16px;
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover { transform: translateY(-4px); }
+
+        .category-tag {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 0.05em;
+        }
+
+        /* Cart Styling */
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f9fafb;
+            padding: 4px 8px;
+            border-radius: 8px;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin: 20px 0;
+            background: #e5e7eb;
+            border-radius: 99px;
+            height: 8px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: var(--primary);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* Buttons */
+        button {
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 10px 16px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-primary:hover { background: var(--primary-hover); }
+
+        .btn-circle {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: 1px solid #d1d5db;
+        }
+
+        /* Totals Area */
+        .summary-box {
+            background: #f9fafb;
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .total-row {
+            border-top: 2px solid #e5e7eb;
+            margin-top: 12px;
+            padding-top: 12px;
+            font-size: 1.25rem;
+            font-weight: 800;
+        }
+
+        .discount-item {
+            color: var(--success);
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .upsell-text {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard">
+    <div class="card">
+        <h2>Marketplace</h2>
+        <div class="product-grid" id="product-catalog"></div>
+    </div>
+
+    <div class="card">
+        <h2>Order Summary</h2>
+        
+        <div id="upsell-section">
+            <div class="upsell-text" id="upsell-msg">Add items to earn rewards</div>
+            <div class="progress-container">
+                <div class="progress-bar" id="goal-progress"></div>
+            </div>
+        </div>
+
+        <div id="cart-list">
+            <p style="color: var(--text-muted); text-align: center;">Cart is empty</p>
+        </div>
+
+        <div class="summary-box">
+            <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+                <input type="text" id="coupon-input" placeholder="Coupon Code" style="flex:1; padding: 8px; border: 1px solid #d1d5db; border-radius: 8px;">
+                <button onclick="applyCoupon()" style="padding: 0 16px; background: #374151; color: white;">Apply</button>
+            </div>
+
+            <div class="row">
+                <span>Subtotal</span>
+                <span id="subtotal">$0.00</span>
+            </div>
+            <div class="row" style="color: var(--success);">
+                <span>Total Savings</span>
+                <span id="savings">-$0.00</span>
+            </div>
+            <div class="row total-row">
+                <span>Total</span>
+                <span id="total">$0.00</span>
+            </div>
+
+            <div id="discounts-log" style="margin-top: 12px;"></div>
+        </div>
+
+        <button class="btn-primary" onclick="alert('Proceeding to Secure Checkout...')">Checkout Now</button>
+    </div>
+</div>
+
+<script>
+    const products = [
+        { id: 1, name: "MacBook Pro", price: 1200, category: "Electronics" },
+        { id: 2, name: "AirPods Max", price: 550, category: "Electronics" },
+        { id: 3, name: "Mechanical Keyboard", price: 150, category: "Accessories" },
+        { id: 4, name: "Desk Mat", price: 30, category: "Accessories" }
+    ];
+
+    let cart = [];
+    let couponAmt = 0;
+    const GOAL_AMT = 2000;
+
+    function init() {
+        const catalog = document.getElementById('product-catalog');
+        catalog.innerHTML = products.map(p => `
+            <div class="product-card">
+                <div class="category-tag">${p.category}</div>
+                <div style="font-weight: 700; margin: 4px 0;">${p.name}</div>
+                <div style="color: var(--text-muted); margin-bottom: 12px;">$${p.price}</div>
+                <button class="btn-primary" style="margin:0" onclick="addToCart(${p.id})">Add to Cart</button>
+            </div>
+        `).join('');
+        render();
+    }
+
+    function addToCart(id) {
+        const exists = cart.find(i => i.id === id);
+        if (exists) exists.quantity++;
+        else cart.push({...products.find(p => p.id === id), quantity: 1});
+        render();
+    }
+
+    function updateQty(id, change) {
+        const item = cart.find(i => i.id === id);
+        if (item) {
+            item.quantity += change;
+            if (item.quantity <= 0) cart = cart.filter(i => i.id !== id);
+        }
+        render();
+    }
+
+    function applyCoupon() {
+        const input = document.getElementById('coupon-input').value.toUpperCase();
+        if (input === 'SAVE100') {
+            couponAmt = 100;
+            alert("Nice! $100 off applied.");
+        } else {
+            couponAmt = 0;
+            alert("Invalid code. Hint: SAVE100");
+        }
+        render();
+    }
+
+    function calculate() {
+        let subtotal = 0;
+        let totalSaved = 0;
+        let log = [];
+
+        cart.forEach(item => {
+            let lineTotal = item.price * item.quantity;
+            subtotal += lineTotal;
+
+            // Rule 1: Bulk (3+)
+            if (item.quantity >= 3) {
+                let s = lineTotal * 0.10;
+                totalSaved += s;
+                log.push(`Bulk Discount: ${item.name} (-$${s.toFixed(2)})`);
+            }
+
+            // Rule 2: Electronics Bonus
+            if (item.category === "Electronics") {
+                let s = (item.price * item.quantity) * 0.05;
+                totalSaved += s;
+                log.push(`Tech Savings: ${item.name} (-$${s.toFixed(2)})`);
+            }
+        });
+
+        // Upsell / Goal Logic
+        let percent = Math.min((subtotal / GOAL_AMT) * 100, 100);
+        let upsellText = subtotal >= GOAL_AMT ? 
+            "✨ Gold Reward Unlocked: $150 Extra Off!" : 
+            `Spend $${(GOAL_AMT - subtotal).toFixed(2)} more for Gold Status`;
+        
+        if (subtotal >= GOAL_AMT) {
+            totalSaved += 150;
+            log.push("Gold Status Reward (-$150.00)");
+        }
+
+        totalSaved += couponAmt;
+
+        return { subtotal, totalSaved, total: subtotal - totalSaved, log, percent, upsellText };
+    }
+
+    function render() {
+        const data = calculate();
+        const list = document.getElementById('cart-list');
+        
+        if (cart.length === 0) {
+            list.innerHTML = `<p style="color: var(--text-muted); text-align: center; padding: 20px;">Cart is empty</p>`;
+        } else {
+            list.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div>
+                        <div style="font-weight: 600;">${item.name}</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted);">$${item.price} each</div>
+                    </div>
+                    <div class="qty-controls">
+                        <button class="btn-circle" onclick="updateQty(${item.id}, -1)">-</button>
+                        <span style="font-weight: 700;">${item.quantity}</span>
+                        <button class="btn-circle" onclick="updateQty(${item.id}, 1)">+</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        document.getElementById('subtotal').innerText = `$${data.subtotal.toFixed(2)}`;
+        document.getElementById('savings').innerText = `-$${data.totalSaved.toFixed(2)}`;
+        document.getElementById('total').innerText = `$${Math.max(0, data.total).toFixed(2)}`;
+        document.getElementById('goal-progress').style.width = data.percent + '%';
+        document.getElementById('upsell-msg').innerText = data.upsellText;
+        document.getElementById('discounts-log').innerHTML = data.log.map(l => `<div class="discount-item">● ${l}</div>`).join('');
+    }
+
+    init();
+</script>
+</body>
+</html>

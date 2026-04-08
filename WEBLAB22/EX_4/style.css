@@ -1,0 +1,127 @@
+:root {
+    --bg: #fdfcf6;
+    --main: #000000;
+    --accent: #bc95ff; 
+    --danger: #ff6b6b;
+    --card-bg: #ffffff;
+    --border-size: 3px;
+}
+
+body {
+    margin: 0;
+    font-family: 'Space Grotesk', sans-serif;
+    background-color: var(--bg);
+    color: var(--main);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    border-bottom: var(--border-size) solid var(--main);
+    background: white;
+}
+
+.logo { font-size: 1.5rem; font-weight: 700; }
+.logo span { color: var(--accent); }
+
+.dashboard {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 40px;
+    padding: 40px 5%;
+}
+
+.card {
+    background: var(--card-bg);
+    border: var(--border-size) solid var(--main);
+    padding: 25px;
+    box-shadow: 8px 8px 0px var(--main);
+    margin-bottom: 25px;
+}
+
+/* Form Styles */
+.field { margin-bottom: 20px; }
+label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 0.9rem; }
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--main);
+    font-family: inherit;
+    font-weight: 500;
+    box-sizing: border-box;
+}
+
+input:focus {
+    outline: none;
+    background-color: #f0ebff;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 15px;
+    background: var(--accent);
+    color: var(--main);
+    border: var(--border-size) solid var(--main);
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 4px 4px 0px var(--main);
+    transition: transform 0.1s;
+}
+
+.btn-primary:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--main); }
+
+/* Table Section */
+.table-container {
+    padding: 0;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th {
+    background: var(--accent);
+    color: var(--main);
+    text-align: left;
+    padding: 15px;
+    border-bottom: var(--border-size) solid var(--main);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+td {
+    padding: 15px;
+    border-bottom: 2px solid var(--main);
+    font-size: 0.95rem;
+}
+
+.btn-delete-small {
+    padding: 6px 12px;
+    background: var(--danger);
+    border: 2px solid var(--main);
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 2px 2px 0px var(--main);
+}
+
+.badge {
+    background: var(--main);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+.btn-clear-top {
+    background: white;
+    border: 2px solid var(--main);
+    padding: 8px 15px;
+    font-weight: 700;
+    cursor: pointer;
+}

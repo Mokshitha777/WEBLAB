@@ -1,0 +1,51 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #eef2f7;
+    padding: 40px;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+form {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+form input {
+    padding: 8px;
+}
+
+form button {
+    grid-column: span 4;
+    padding: 10px;
+    background: #4a6cf7;
+    color: white;
+    border: none;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+button.edit { background: orange; color: white; border: none; padding: 5px; }
+button.delete { background: red; color: white; border: none; padding: 5px; }
+
+#message { margin: 10px 0; font-weight: bold; }
+.success { color: green; }
+.error { color: red; }

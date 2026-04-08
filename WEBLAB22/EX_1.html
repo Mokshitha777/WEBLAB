@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 Canvas Exercise</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+            font-family: sans-serif;
+        }
+        canvas {
+            border: 2px solid #333;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h2 { color: #333; }
+    </style>
+</head>
+<body>
+
+    <h2>Canvas Drawing</h2>
+    <canvas id="myCanvas" width="500" height="300"></canvas>
+
+    <script>
+        // Get the canvas element and its 2D drawing context
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // 1. Display a filled rectangle (Blue)
+        ctx.fillStyle = '#3498db';
+        ctx.fillRect(50, 50, 150, 80);
+
+        // 2. Display a filled circle (Red)
+        ctx.beginPath();
+        ctx.arc(350, 90, 40, 0, Math.PI * 2); // Center X, Center Y, Radius
+        ctx.fillStyle = '#e74c3c';
+        ctx.fill();
+
+        // 3. Display a straight line (Green)
+        ctx.beginPath();
+        ctx.moveTo(50, 200);   // Start point
+        ctx.lineTo(450, 200);  // End point
+        ctx.strokeStyle = '#2ecc71';
+        ctx.lineWidth = 5;
+        ctx.stroke();
+
+        // 4. Display the text "HTML5 Canvas" (Dark Gray)
+        ctx.font = 'bold 30px Arial';
+        ctx.fillStyle = '#2c3e50';
+        ctx.textAlign = 'center';
+        ctx.fillText('HTML5 Canvas', canvas.width / 2, 260);
+
+    </script>
+</body>
+</html>

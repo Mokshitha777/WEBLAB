@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Survey Builder</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; padding: 20px; background: #f4f4f9; }
+        .survey-container { max-width: 600px; margin: auto; background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .question-block { margin-bottom: 20px; padding: 15px; border-left: 5px solid #ddd; transition: 0.3s; }
+        .question-block.invalid { border-left-color: #ff4d4d; background: #fff5f5; }
+        label { font-weight: bold; display: block; margin-bottom: 8px; }
+        .option-label { font-weight: normal; display: flex; align-items: center; gap: 8px; margin-bottom: 4px; cursor: pointer; }
+        input[type="text"] { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        .error-msg { color: #ff4d4d; font-size: 0.85rem; display: block; margin-top: 5px; min-height: 1em; }
+        button { background: #4a90e2; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 1rem; }
+        button:hover { background: #357abd; }
+        #form-status { margin-top: 15px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="survey-container">
+    <h2>User Preferences Survey</h2>
+    <form id="survey-form">
+        <div id="questions-container"></div>
+        <button type="submit">Submit Survey</button>
+        <p id="form-status"></p>
+    </form>
+</div>
+
+<script>
+    // 1. Data Structure: Storing questions and validation rules
+    const surveyQuestions = [
+        {
+            id: "q1",
+            label: "What is your full name?",
+            type: "text",
+            required: true,
+            minLength: 3
+        },
+        {
+            id: "q2",
+            label: "Which device do you use most?",
+            type: "radio",
+            options: ["Smartphone", "Laptop", "Tablet", "Desktop"],
+            required: true
+        },
+        {
+            id: "q3",
+            label: "Which features do you value? (Max 2)",
+            type: "checkbox",
+            options: ["Speed", "Design", "Battery Life", "Camera Quality"],
+            maxSelect: 2
+        }
+    ];
+
+    const container = document.getElementById('questions-container');
+    const form = document.getElementById('survey-form');
+
+    // 2. Generator: Create DOM elements based on question type
+    function renderForm() {
+        surveyQuestions.forEach(q => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'question-block';
+            wrapper.dataset.id = q.id;
+
+            const label = document.createElement('label');
+            label.innerText = q.label;
+            wrapper.appendChild(label);
+
+            if (q.type === 'text') {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = "Enter response...";
+                wrapper.appendChild(input);
+            } 
+            else if (q.type === 'radio' || q.type === 'checkbox') {
+                q.options.forEach(opt => {
+                    const optLabel = document.createElement('label');
+                    optLabel.className = 'option-label';
+                    
+                    const input = document.createElement('input');
+                    input.type = q.type;
+                    input.name = q.id; // Groups radio buttons
+                    input.value = opt;
+                    
+                    optLabel.append(input, opt);
+                    wrapper.appendChild(optLabel);
+                });
+            }
+
+            const errorSpan = document.createElement('span');
+            errorSpan.className = 'error-msg';
+            wrapper.appendChild(errorSpan);
+            
+            container.appendChild(wrapper);
+        });
+    }
+
+    // 3. Validation Logic: Check inputs against requirements
+    function validateForm() {
+        let isFormValid = true;
+
+        surveyQuestions.forEach(q => {
+            const wrapper = document.querySelector(`[data-id="${q.id}"]`);
+            const errorSpan = wrapper.querySelector('.error-msg');
+            let errorText = "";
+
+            if (q.type === 'text') {
+                const input = wrapper.querySelector('input');
+                const val = input.value.trim();
+                if (q.required && !val) {
+                    errorText = "This field is required.";
+                } else if (q.minLength && val.length < q.minLength) {
+                    errorText = `Must be at least ${q.minLength} characters.`;
+                }
+            } 
+            else if (q.type === 'radio') {
+                const checked = wrapper.querySelector('input:checked');
+                if (q.required && !checked) {
+                    errorText = "Please select one option.";
+                }
+            }
+            else if (q.type === 'checkbox') {
+                const checkedCount = wrapper.querySelectorAll('input:checked').length;
+                if (q.maxSelect && checkedCount > q.maxSelect) {
+                    errorText = `You can only select up to ${q.maxSelect} options.`;
+                }
+            }
+
+            // 4. UI Feedback: Update DOM to show/hide errors
+            if (errorText) {
+                errorSpan.innerText = errorText;
+                wrapper.classList.add('invalid');
+                isFormValid = false;
+            } else {
+                errorSpan.innerText = "";
+                wrapper.classList.remove('invalid');
+            }
+        });
+
+        return isFormValid;
+    }
+
+    // 5. Submission Handling
+    form.addEventListener('submit', (e) => {
+        e.preventDefault(); // Prevent page reload
+        const status = document.getElementById('form-status');
+        
+        if (validateForm()) {
+            status.innerText = "✓ Survey submitted successfully!";
+            status.style.color = "green";
+            // In a real app, you would use fetch() here to send data to a server
+        } else {
+            status.innerText = "✗ Please fix the errors in the form.";
+            status.style.color = "#ff4d4d";
+        }
+    });
+
+    // Initialize the form
+    renderForm();
+</script>
+
+</body>
+</html>
